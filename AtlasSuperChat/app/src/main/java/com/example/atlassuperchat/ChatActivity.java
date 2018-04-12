@@ -16,13 +16,44 @@ import com.google.firebase.database.Query;
 
 public class ChatActivity extends AppCompatActivity {
 
+    private final ChildEventListener messagesListener = new ChildEventListener() {
+
+        @Override
+        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            //Do something with the individual node here`enter code here
+            TextView textViewMessages = findViewById(R.id.textViewMessages);
+            Message message = dataSnapshot.getValue(Message.class);
+
+            textViewMessages.append(message.getFrom() + ": " + message.getText() + "\n");
+        }
+
+        @Override
+        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+        }
+
+        @Override
+        public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+        }
+
+        @Override
+        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+
+    };
     private DatabaseReference globalChatMessages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        //FirebaseApp.initializeApp(this);
         globalChatMessages = FirebaseDatabase.getInstance().getReference().child("globalChatMessages");
 
     }
@@ -30,52 +61,20 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        initUpdateListener();
-    }
-
-    private void initUpdateListener() {
-        globalChatMessages.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                //Do something with the individual node here`enter code here
-                TextView textViewMessages = findViewById(R.id.textViewMessages);
-                Message message = dataSnapshot.getValue(Message.class);
-
-                textViewMessages.append(message.getFrom() + ": " + message.getText() + "\n");
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-
-        });
+        TextView textViewMessages = findViewById(R.id.textViewMessages);
+        textViewMessages.setText("");
+        globalChatMessages.addChildEventListener(messagesListener);
     }
 
     @Override
     protected void onStop() {
-
+        globalChatMessages.removeEventListener(messagesListener);
         super.onStop();
     }
 
     public void sendMessage(View view) {
 
-        String from = "Petr";
+        String from = "Petr Adamek";
         EditText editTextNewMessage = findViewById(R.id.editTextNewMessage);
         String  text = editTextNewMessage.getText().toString();
 
