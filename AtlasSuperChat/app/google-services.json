@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1082965668921",
+    "firebase_url": "https://my-awesome-atlas-project.firebaseio.com",
+    "project_id": "my-awesome-atlas-project",
+    "storage_bucket": "my-awesome-atlas-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1082965668921:android:6585d7afd23e8527",
+        "android_client_info": {
+          "package_name": "com.example.atlassuperchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1082965668921-rkjsk075o87ep2ac428lanq8sej4dtpm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBej8ZkODQGuWLWD51sXcyTB6FUP6Oql14"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

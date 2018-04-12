@@ -7,6 +7,8 @@ import android.os.IBinder;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.List;
+
 public class ChatService extends Service {
 
     private DatabaseReference mDatabase;
@@ -15,7 +17,6 @@ public class ChatService extends Service {
 
     public class LocalBinder extends Binder {
         ChatService getService() {
-            // Return this instance of ChatService so clients can call public methods
             return ChatService.this;
         }
     }
@@ -25,4 +26,5 @@ public class ChatService extends Service {
         mDatabase = FirebaseDatabase.getInstance().getReference().child("globalChatMessages");
         return mBinder;
     }
+
 }
