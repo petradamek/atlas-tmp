@@ -2,7 +2,10 @@ package com.example.atlassuperchat;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -56,6 +59,28 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
         globalChatMessages = FirebaseDatabase.getInstance().getReference().child("globalChatMessages");
 
+        final TextView textViewMessages = findViewById(R.id.textViewMessages);
+        textViewMessages.setOnEditorActionListener(
+                new EditText.OnEditorActionListener() {
+                    @Override
+                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                        if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+                                actionId == EditorInfo.IME_ACTION_DONE ||
+                                event != null &&
+                                        event.getAction() == KeyEvent.ACTION_DOWN &&
+                                        event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                            if (event == null || !event.isShiftPressed()) {
+                                // the user is done typing.
+                                sendMessage(textViewMessages);
+                                return true; // consume.
+                            }
+                        }
+                        return false; // pass on to other listeners.
+                    }
+                }
+        );
+        textViewMessages.setMovementMethod(new ScrollingMovementMethod());
+
     }
 
     @Override
@@ -77,6 +102,7 @@ public class ChatActivity extends AppCompatActivity {
         String from = "Petr Adamek";
         EditText editTextNewMessage = findViewById(R.id.editTextNewMessage);
         String  text = editTextNewMessage.getText().toString();
+        editTextNewMessage.setText("");
 
         Message message = new Message(text, from);
 
