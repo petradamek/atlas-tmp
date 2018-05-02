@@ -5,11 +5,20 @@ import java.util.List;
 
 public class OrderJson {
 
+    private Long id;
     private AddressJson customerAddress;
     private String number;
     private Instant createdTimestamp;
     private List<OrderItemJson> items;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
     public AddressJson getCustomerAddress() {
         return customerAddress;
     }
